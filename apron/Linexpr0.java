@@ -165,14 +165,22 @@ public class Linexpr0
      */
     public Coeff[] getCoeffs()
     {
-        Linterm0[] l = getLinterms();
-        int nb = l[l.length-1].dim + 1;
-        Coeff[] c = new Coeff[nb];
-        for (int i=0; i<nb; i++)
-            c[i] = Coeff.create();
-        for (int i=0; i<l.length; i++)
-            c[l[i].dim] = l[i].coeff;
-        return c;
+	Linterm0[] l = getLinterms();
+	if (l.length == 0) {
+	    Coeff[] c = new Coeff[0];
+	    return c;
+	} else {
+	    // If l.length = 0 this causes an OutOfBoundsException if
+	    // not enclosed in an if-block
+	    // Modified by tobia.tesan@gmail.com
+	    int nb = l[l.length-1].dim + 1;
+	    Coeff[] c = new Coeff[nb];
+	    for (int i=0; i<nb; i++)
+		c[i] = Coeff.create();
+	    for (int i=0; i<l.length; i++)
+		c[l[i].dim] = l[i].coeff;
+	    return c;
+	}
     }
 
     /** 
